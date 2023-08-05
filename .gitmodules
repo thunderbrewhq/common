@@ -1,9 +1,9 @@
-[submodule "lib/squall"]
-	path = lib/squall
-	url = https://github.com/whoahq/squall
-[submodule "lib/system"]
-	path = lib/system
-	url = https://github.com/whoahq/system
 [submodule "lib/typhoon"]
 	path = lib/typhoon
-	url = https://github.com/whoahq/typhoon
+	url = https://github.com/thunderbrewhq/typhoon.git
+[submodule "lib/squall"]
+	path = lib/squall
+	url = https://github.com/thunderbrewhq/squall.git
+[submodule "lib/system"]
+	path = lib/system
+	url = https://github.com/thunderbrewhq/system.git
