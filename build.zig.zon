@@ -1,0 +1,23 @@
+.{
+    .name = "common",
+    .version = "1.0.0",
+    .paths = .{ "LICENSE", "README.md", "build.zig", "build.zig.zon", "common" },
+    .dependencies = .{
+        .system = .{
+            .url = "https://github.com/thunderbrewhq/system/archive/refs/heads/master.zip",
+            .hash = "1220d6a6e4e2f836c1c22eb128e6c74c773ea191bfbaac02601dcb5238c2b0874182",
+        },
+        .squall = .{
+            .url = "https://github.com/thunderbrewhq/squall/archive/refs/heads/master.zip",
+            .hash = "1220c195e9e756cbd479fbf54ee507d82dab99688616ed6fc26a07279526f5eee751",
+        },
+        .typhoon = .{
+            .url = "https://github.com/thunderbrewhq/typhoon/archive/refs/heads/master.zip",
+            .hash = "122052c99a00291165239ba60af484d7eaf8ca29c43e6b8d34e41cef3591ae905a6c",
+        },
+        .libexpat = .{
+            .url = "https://github.com/thunderbrewhq/libexpat/archive/refs/heads/master.zip",
+            .hash = "12202091a554a391dd63991d54cf557be0415d43294de9e310129b0c1ac407ac06ef",
+        },
+    },
+}
