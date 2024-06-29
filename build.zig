@@ -34,7 +34,9 @@ pub fn build(b: *std.Build) void {
   common.addIncludePath(b.path("."));
 
   const common_compiler_flags = [_][]const u8 {
-    "-std=c++11"
+    "-std=c++11",
+    // Disable UBsan alignment checks (causes problems when writing to unaligned memory in CDataStore)
+    "-fno-sanitize=alignment"
   };
 
   const common_sources = [_][]const u8 {
