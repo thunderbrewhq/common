@@ -21,13 +21,10 @@ pub fn build(b: *std.Build) void {
   const typhoon = b.dependency("typhoon", .{});
   const libexpat = b.dependency("libexpat", .{});
   // Link squall
-  common.addIncludePath(squall.path("."));
   common.linkLibrary(squall.artifact("storm"));
   // Link typhoon
-  common.addIncludePath(typhoon.path("."));
   common.linkLibrary(typhoon.artifact("tempest"));
   // Link libexpat
-  common.addIncludePath(libexpat.path("expat/lib"));
   common.linkLibrary(libexpat.artifact("expat"));
 
   // Include common project directory
@@ -89,15 +86,17 @@ pub fn build(b: *std.Build) void {
   // Add system detection defines
   system.add_defines(common_test_exe);
 
-  // Link common
+  // include project directory
   common_test_exe.addIncludePath(b.path("."));
+
+  // Link common
   common_test_exe.linkLibrary(common);
 
   // Link squall
-  common_test_exe.addIncludePath(squall.path("."));
+  common_test_exe.linkLibrary(squall.artifact("storm"));
 
   // Link typhoon
-  common_test_exe.addIncludePath(typhoon.path("."));
+  common_test_exe.linkLibrary(typhoon.artifact("tempest"));
 
   common_test_exe.addCSourceFiles(.{
     .files = &.{
