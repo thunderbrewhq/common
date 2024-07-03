@@ -76,6 +76,8 @@ pub fn build(b: *std.Build) void {
     .flags = &common_compiler_flags
   });
 
+  common.installHeadersDirectory(b.path("common"), "common", .{ .include_extensions = &.{"hpp"} });
+
   // CommonTest executable
   const common_test_exe = b.addExecutable(.{
     .name = "CommonTest",

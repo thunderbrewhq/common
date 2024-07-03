@@ -9,15 +9,15 @@
         },
         .squall = .{
             .url = "https://github.com/thunderbrewhq/squall/archive/refs/heads/master.zip",
-            .hash = "1220c195e9e756cbd479fbf54ee507d82dab99688616ed6fc26a07279526f5eee751",
+            .hash = "12200577cef7c49c34d706346f514343d0378480cdf7cdaff4ee9e9318fc29f0168b",
         },
         .typhoon = .{
             .url = "https://github.com/thunderbrewhq/typhoon/archive/refs/heads/master.zip",
-            .hash = "122052c99a00291165239ba60af484d7eaf8ca29c43e6b8d34e41cef3591ae905a6c",
+            .hash = "1220edf8ee88ba39d4b7e16a6a073ccf7821cac8b517ddae0dd47e61b1d9823c5802",
         },
         .libexpat = .{
             .url = "https://github.com/thunderbrewhq/libexpat/archive/refs/heads/master.zip",
-            .hash = "12202091a554a391dd63991d54cf557be0415d43294de9e310129b0c1ac407ac06ef",
+            .hash = "1220fb8e2d69edff3c174d0367c37b54ffb0f41eaa8dc883e0ecc3a98e8bfe2e0782",
         },
     },
 }
