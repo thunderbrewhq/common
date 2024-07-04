@@ -5,11 +5,9 @@
 #include <cstddef>
 #include <cstdint>
 
-typedef void* HANDLE;
+#include <storm/Handle.hpp>
 
-#define DECLARE_HANDLE(name) \
-    struct name##__;         \
-    typedef struct name##__* name
+typedef void* HANDLE;
 
 DECLARE_HANDLE(HOBJECT);
 
