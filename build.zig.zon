@@ -13,7 +13,7 @@
         },
         .typhoon = .{
             .url = "https://github.com/thunderbrewhq/typhoon/archive/refs/heads/master.zip",
-            .hash = "12206527f89a87993175002f4d48ea063ba34dfa62987c6cedfe5d3a7cd93b276556",
+            .hash = "122005cb637e72ea5170b64e2ecf463824157fdbcd1c61ef865788591b8354ee41bd",
         },
         .libexpat = .{
             .url = "https://github.com/thunderbrewhq/libexpat/archive/refs/heads/master.zip",
