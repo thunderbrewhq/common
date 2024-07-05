@@ -9,7 +9,7 @@
         },
         .squall = .{
             .url = "https://github.com/thunderbrewhq/squall/archive/refs/heads/master.zip",
-            .hash = "12203d06b0915454736d3feff49015777b5622ff9a759329eadc53e3252de4227e4e",
+            .hash = "12209ca2de75a672d95de79cacb1b2d9063dc6bbbc6bdac9d8ff27806fdab5ee5a12",
         },
         .typhoon = .{
             .url = "https://github.com/thunderbrewhq/typhoon/archive/refs/heads/master.zip",
