@@ -4,6 +4,7 @@
 #include "common/time/win/TimeManager.hpp"
 #include <storm/Memory.hpp>
 #include <windows.h>
+#include <new>
 
 static OsTimeManager* s_OsTimeMgr;
 
