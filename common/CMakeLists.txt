@@ -4,9 +4,17 @@ file(GLOB COMMON_SOURCES
     "datastore/*.cpp"
     "mempool/*.cpp"
     "objectalloc/*.cpp"
+    "processor/*.cpp"
+    "processor/win/*.cpp"
+    "processor/mac/*.cpp"
+    "processor/linux/*.cpp"
     "ref/*.cpp"
     "string/*.cpp"
     "thread/*.cpp"
+    "time/*.cpp"
+    "time/win/*.cpp"
+    "time/mac/*.cpp"
+    "time/linux/*.cpp"
     "xml/*.cpp"
 )
 
