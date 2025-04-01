@@ -1,7 +1,6 @@
 #if defined(WHOA_SYSTEM_MAC)
 
 #include "common/time/Time.hpp"
-#include "common/time/GetAsyncTimeMs.hpp"
 #include <mach/mach_time.h>
 #include <unistd.h>
 
