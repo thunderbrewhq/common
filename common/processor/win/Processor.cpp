@@ -329,7 +329,7 @@ int32_t IOsGetPowerProfFrequency() {
 
     int32_t result = 0;
 
-    typedef NTSTATUS (*LPCALLNTPOWERINFORMATIONFUNC)(POWER_INFORMATION_LEVEL, PVOID, ULONG, PVOID, ULONG);
+    typedef LONG (*LPCALLNTPOWERINFORMATIONFUNC)(POWER_INFORMATION_LEVEL, PVOID, ULONG, PVOID, ULONG);
     auto CallNtPowerInformation = reinterpret_cast<LPCALLNTPOWERINFORMATIONFUNC>(GetProcAddress(library, "CallNtPowerInformation"));
     if (CallNtPowerInformation) {
         struct PROCESSOR_POWER_INFORMATION {
