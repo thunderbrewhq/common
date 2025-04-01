@@ -4,6 +4,7 @@
 #include "common/time/Time.hpp"
 #include "common/processor/Processor.hpp"
 #include <windows.h>
+#include <cmath>
 
 OsTimeManager::OsTimeManager(TimingMethod tm) {
     this->timingMethod = NotSet;
@@ -86,7 +87,7 @@ TimingMethod OsTimeManager::Calibrate() {
         }
         QueryPerformanceCounter(reinterpret_cast<LARGE_INTEGER*>(&pc2));
 
-        if (std::abs(tc4 - static_cast<int64_t>(static_cast<double>(pc2 - pc1) / this->performanceFrequency * 1000.0) - tc2) >= 5) {
+        if (std::llabs(tc4 - static_cast<int64_t>(static_cast<double>(pc2 - pc1) / this->performanceFrequency * 1000.0) - tc2) >= 5) {
             this->timingTestError = 3;
         }
     }
