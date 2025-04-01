@@ -137,7 +137,7 @@ int32_t IOsGetProcessorFeatures(ProcessorFeatures& features) {
 
     int32_t result = 0;
 
-    __cpuid(0, cpuinfo);
+    __cpuid(cpuinfo, 0);
     if (cpuinfo[0]) {
         result = 1;
         features.std_0a = cpuinfo[0];
@@ -146,44 +146,44 @@ int32_t IOsGetProcessorFeatures(ProcessorFeatures& features) {
         features.std_0c = cpuinfo[2];
 
         if (features.std_0a >= 4) {
-            __cpuid(4, cpuinfo);
+            __cpuid(cpuinfo, 4);
             features.std_4a = cpuinfo[0];
         }
 
-        __cpuid(1, cpuinfo);
+        __cpuid(cpuinfo, 1);
         features.std_1d = cpuinfo[3];
         features.std_1b = cpuinfo[0];
 
-        __cpuid(0x80000000, cpuinfo);
+        __cpuid(cpuinfo, 0x80000000);
         if (cpuinfo[0] > 0x80000000) {
             result = 2;
             features.ext_0a = cpuinfo[0];
             if (features.ext_0a >= 0x80000008) {
-                __cpuid(0x80000008, cpuinfo);
+                __cpuid(cpuinfo, 0x80000008);
                 features.ext_8c = cpuinfo[2];
             }
             if (features.ext_0a >= 0x80000002) {
-                __cpuid(0x80000002, cpuinfo);
+                __cpuid(cpuinfo, 0x80000002);
                 features.ext_2a = cpuinfo[0];
                 features.ext_2b = cpuinfo[1];
                 features.ext_2c = cpuinfo[2];
                 features.ext_2d = cpuinfo[3];
             }
             if (features.ext_0a >= 0x80000003) {
-                __cpuid(0x80000003, cpuinfo);
+                __cpuid(cpuinfo, 0x80000003);
                 features.ext_3a = cpuinfo[0];
                 features.ext_3b = cpuinfo[1];
                 features.ext_3c = cpuinfo[2];
                 features.ext_3d = cpuinfo[3];
             }
             if (features.ext_0a >= 0x80000004) {
-                __cpuid(0x80000004, cpuinfo);
+                __cpuid(cpuinfo, 0x80000004);
                 features.ext_4a = cpuinfo[0];
                 features.ext_4b = cpuinfo[1];
                 features.ext_4c = cpuinfo[2];
                 features.ext_4d = cpuinfo[3];
             }
-            __cpuid(0x80000001, cpuinfo);
+            __cpuid(cpuinfo, 0x80000001);
             features.ext_1d = cpuinfo[3];
             features.ext_1c = cpuinfo[2];
         }
