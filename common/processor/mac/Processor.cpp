@@ -7,7 +7,7 @@
 uint32_t OsGetProcessorCount() {
     uint32_t count = 1;
     uint32_t logicalcpu;
-    int32_t length = sizeof(logicalcpu);
+    size_t length = sizeof(logicalcpu);
     if (sysctlbyname("hw.logicalcpu", &logicalcpu, &length, nullptr, 0) == 0) {
         count = logicalcpu;
     }
