@@ -2,7 +2,7 @@
 #include <algorithm>
 #include <cstring>
 #include <storm/Error.hpp>
-#include <storm/Memory.hpp>
+#include <bc/Memory.hpp>
 #include <storm/String.hpp>
 
 CDataStore::~CDataStore() {

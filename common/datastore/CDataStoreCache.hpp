@@ -3,7 +3,7 @@
 
 #include "common/datastore/CDataStore.hpp"
 #include <cstdlib>
-#include <storm/Memory.hpp>
+#include <bc/Memory.hpp>
 
 template <size_t size>
 class CDataStoreCache : public CDataStore {

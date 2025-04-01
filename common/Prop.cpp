@@ -1,6 +1,6 @@
 #include "common/Prop.hpp"
 #include "common/Thread.hpp"
-#include <storm/Memory.hpp>
+#include <bc/Memory.hpp>
 
 namespace Prop {
 uint32_t s_tlsIndex;

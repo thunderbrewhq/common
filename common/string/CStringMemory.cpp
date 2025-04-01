@@ -1,6 +1,6 @@
 #include "common/string/CStringMemory.hpp"
 #include <climits>
-#include <storm/Memory.hpp>
+#include <bc/Memory.hpp>
 #include <storm/String.hpp>
 
 void CStringMemory::AllocateBlock(size_t blockSize) {

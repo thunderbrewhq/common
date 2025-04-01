@@ -1,7 +1,7 @@
 #include "common/string/CStringManager.hpp"
 #include <climits>
 #include <cstring>
-#include <storm/Memory.hpp>
+#include <bc/Memory.hpp>
 #include <storm/String.hpp>
 
 CStringManager* CStringManager::s_stringManager;

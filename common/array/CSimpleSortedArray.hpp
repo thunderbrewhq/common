@@ -6,7 +6,7 @@
 #include <cstring>
 #include <storm/Array.hpp>
 #include <storm/List.hpp>
-#include <storm/Memory.hpp>
+#include <bc/Memory.hpp>
 
 template <class T>
 class CSimpleSortedArray {

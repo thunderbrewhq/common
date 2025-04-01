@@ -1,6 +1,6 @@
 #include "common/objectalloc/CObjectHeap.hpp"
 #include <cstring>
-#include <storm/Memory.hpp>
+#include <bc/Memory.hpp>
 
 int32_t CObjectHeap::Allocate(uint32_t objSize, uint32_t heapObjects, const char* heapName) {
     this->m_obj = SMemAlloc(heapObjects * (objSize + sizeof(uint32_t)), heapName, 0, 0x0);
