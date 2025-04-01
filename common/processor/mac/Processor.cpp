@@ -24,7 +24,7 @@ uint32_t OsGetProcessorFeaturesEx(int32_t& vendorID) {
         features = 0x80000000;
 
         int32_t feature;
-        int32_t length;
+        size_t length;
 
         length = sizeof(feature);
         if (sysctlbyname("hw.optional.mmx", &feature, &length, nullptr, 0) == 0 && feature) {
