@@ -25,6 +25,8 @@ void OsSleep(uint32_t duration);
 
 #if defined(WHOA_SYSTEM_WIN)
 
+uint32_t OsTimeGetTestError();
+
 const char* OsTimeGetTimingMethodName(TimingMethod timingMethod);
 
 TimingMethod OsTimeGetTimingMethod();

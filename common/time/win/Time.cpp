@@ -30,6 +30,10 @@ void OsTimeShutdown() {
     OsTimeManagerDestroy();
 }
 
+uint32_t OsTimeGetTestError() {
+    return s_OsTimeMgr->timingTestError;
+}
+
 const char* OsTimeGetTimingMethodName(TimingMethod timingMethod) {
     switch (timingMethod) {
     case Timing_BestAvailable:
