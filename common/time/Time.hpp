@@ -7,7 +7,8 @@ enum TimingMethod {
     Timing_NotSet                  = -1,
     Timing_BestAvailable           =  0,
     Timing_GetTickCount            =  1,
-    Timing_QueryPerformanceCounter =  2
+    Timing_QueryPerformanceCounter =  2,
+    TimingMethods                  =  3
 };
 
 void OsTimeStartup(TimingMethod timingMethod);
