@@ -26,6 +26,8 @@ void OsSleep(uint32_t duration);
 
 const char* OsTimeGetTimingMethodName(TimingMethod timingMethod);
 
+TimingMethod OsTimeGetTimingMethod();
+
 #endif
 
 #endif

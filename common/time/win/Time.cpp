@@ -45,6 +45,10 @@ const char* OsTimeGetTimingMethodName(TimingMethod timingMethod) {
     }
 }
 
+TimingMethod OsTimeGetTimingMethod() {
+    return s_OsTimeMgr->timingMethod;
+}
+
 uint64_t OsGetAsyncTimeMsPrecise() {
     return s_OsTimeMgr->Snapshot();
 }
