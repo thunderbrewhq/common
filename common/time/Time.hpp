@@ -4,12 +4,10 @@
 #include <cstdint>
 
 enum TimingMethod {
-    NotSet        = -1,
-    BestAvailable =  0,
-    // GetTickCount (Windows), mach_absolute_time (MacOS)
-    SystemMethod1 =  1,
-    // QueryPerformanceCounter (Windows), Carbon Microseconds (MacOS)
-    SystemMethod2 =  2
+    Timing_NotSet                  = -1,
+    Timing_BestAvailable           =  0,
+    Timing_GetTickCount            =  1,
+    Timing_QueryPerformanceCounter =  2
 };
 
 void OsTimeStartup(TimingMethod timingMethod);
@@ -23,5 +21,11 @@ uint64_t OsGetAsyncTimeMsPrecise();
 int64_t OsGetAsyncClocksPerSecond();
 
 void OsSleep(uint32_t duration);
+
+#if defined(WHOA_SYSTEM_WIN)
+
+const char* OsTimeGetTimingMethodName(TimingMethod timingMethod);
+
+#endif
 
 #endif

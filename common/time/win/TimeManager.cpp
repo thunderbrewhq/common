@@ -7,19 +7,19 @@
 #include <cmath>
 
 OsTimeManager::OsTimeManager(TimingMethod tm) {
-    this->timingMethod = NotSet;
+    this->timingMethod = Timing_NotSet;
 
     auto method = this->Calibrate();
 
-    if (tm != BestAvailable && method != timingMethod) {
-        if (tm == SystemMethod2 && method == SystemMethod1) {
+    if (tm != Timing_BestAvailable && method != timingMethod) {
+        if (tm == Timing_QueryPerformanceCounter && method == Timing_GetTickCount) {
             this->timingTestError = 5;
         }
         method = tm;
     }
 
     this->timingMethod = method;
-    auto freq = method == SystemMethod2 ? this->performanceFrequency : static_cast<int64_t>(1000LL);
+    auto freq = method == Timing_QueryPerformanceCounter ? this->performanceFrequency : static_cast<int64_t>(1000LL);
     this->scaleToMs = 1000.0 / static_cast<double>(freq);
     this->timeBegin = 0;
 }
@@ -27,12 +27,12 @@ OsTimeManager::OsTimeManager(TimingMethod tm) {
 TimingMethod OsTimeManager::Calibrate() {
     if (!QueryPerformanceFrequency(reinterpret_cast<LARGE_INTEGER*>(&this->performanceFrequency))) {
         this->timingTestError = 1;
-        return SystemMethod1;
+        return Timing_GetTickCount;
     }
 
     if (this->performanceFrequency == 0) {
         this->timingTestError = 2;
-        return SystemMethod1;
+        return Timing_GetTickCount;
     }
 
     auto process = GetCurrentProcess();
@@ -95,11 +95,11 @@ TimingMethod OsTimeManager::Calibrate() {
     SetPriorityClass(process, priorityClass);
     SetThreadPriority(thread, threadPriority);
     OsSleep(0);
-    return this->timingMethod == BestAvailable ? SystemMethod2 : SystemMethod1;
+    return this->timingMethod == Timing_BestAvailable ? Timing_QueryPerformanceCounter : Timing_GetTickCount;
 }
 
 uint64_t OsTimeManager::Snapshot() {
-    if (this->timingMethod != SystemMethod2) {
+    if (this->timingMethod != Timing_QueryPerformanceCounter) {
         return static_cast<uint64_t>((static_cast<double>(GetTickCount()) * this->scaleToMs) + this->timeBegin);
     }
 

@@ -11,7 +11,7 @@ static OsTimeManager* s_OsTimeMgr;
 void OsTimeManagerCreate(TimingMethod timingMethod) {
     auto m = SMemAlloc(sizeof(OsTimeManager), __FILE__, __LINE__, 0x8);
     if (m) {
-        s_OsTimeMgr = new (m) OsTimeManager(timingMethod);
+        s_OsTimeMgr = new(m) OsTimeManager(timingMethod);
     }
 }
 
@@ -30,6 +30,21 @@ void OsTimeShutdown() {
     OsTimeManagerDestroy();
 }
 
+const char* OsTimeGetTimingMethodName(TimingMethod timingMethod) {
+    switch (timingMethod) {
+    case Timing_BestAvailable:
+        return "[Best Available]";
+    case Timing_GetTickCount:
+        return "GetTickCount";
+    case Timing_QueryPerformanceCounter:
+        return "QueryPerformanceCounter";
+    case Timing_NotSet:
+        return "[Not Set]";
+    default:
+        return "[Unknown]";
+    }
+}
+
 uint64_t OsGetAsyncTimeMsPrecise() {
     return s_OsTimeMgr->Snapshot();
 }
@@ -39,7 +54,7 @@ uint64_t OsGetAsyncTimeMs() {
 }
 
 int64_t OsGetAsyncClocksPerSecond() {
-    if (s_OsTimeMgr->timingMethod == SystemMethod2) {
+    if (s_OsTimeMgr->timingMethod == Timing_QueryPerformanceCounter) {
         return s_OsTimeMgr->performanceFrequency;
     } else {
         return 1000LL;
