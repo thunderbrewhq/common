@@ -63,7 +63,7 @@ TimingMethod OsTimeManager::Calibrate() {
         GetProcessAffinityMask(process, &processAffinityMask, &systemAffinityMask);
 
         for (uint32_t i = 0; i < 512; i++) {
-            SetThreadAffinityMask(thread, 1 << static_cast<DWORD_PTR>(static_cast<uint8_t>(i % nproc) & 0x1F));
+            SetThreadAffinityMask(thread, static_cast<DWORD_PTR>(1UL << ((i % nproc) & 31UL)));
             OsSleep(0);
             QueryPerformanceCounter(reinterpret_cast<LARGE_INTEGER*>(&pc2));
             if (pc2 <= pc1) {
