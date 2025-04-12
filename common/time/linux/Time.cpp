@@ -19,6 +19,10 @@ uint64_t OsGetAsyncTimeMsPrecise() {
     return ticks;
 }
 
+int64_t OsGetAsyncClocksPerSecond() {
+    return 1000LL;
+}
+
 uint64_t OsGetAsyncTimeMs() {
     return OsGetAsyncTimeMsPrecise();
 }

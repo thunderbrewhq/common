@@ -28,6 +28,11 @@ uint64_t OsGetAsyncTimeMs() {
     return OsGetAsyncTimeMsPrecise();
 }
 
+int64_t OsGetAsyncClocksPerSecond() {
+    // TODO: verify
+    return 1000LL;
+}
+
 void OsSleep(uint32_t duration) {
     usleep(duration);
 }
