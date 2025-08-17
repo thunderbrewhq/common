@@ -12,7 +12,7 @@
 #define ALLOCATOR_NEW_ZERO(allocator, T, ...) (new (allocator.GetData(1, __FILE__, __LINE__)) T(__VA_ARGS__))
 
 #define ALLOCATOR_PUT(allocator, ptr) allocator.PutData(ptr, __FILE__, __LINE__)
-#define ALLOCATOR_PUT(allocator, ptr)                                                                               \
+#define ALLOCATOR_DEL(allocator, ptr)                                                          \
     do {                                                                                       \
         if (ptr) {                                                                             \
             using __data_object = std::remove_pointer<std::decay<decltype(ptr)>::type>::type;  \
