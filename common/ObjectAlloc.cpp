@@ -49,3 +49,15 @@ uint32_t ObjectAllocAddHeap(uint32_t objectSize, uint32_t objsPerBlock, const ch
 
     return heapId;
 }
+
+uint32_t ObjectAllocUsage(uint32_t heapId) {
+    auto globals = GetObjAllocGlobals();
+
+    STORM_ASSERT(heapId < globals->objects.Count());
+
+    auto result = globals->objects[heapId].BlocksAllocated();
+
+    ReleaseObjAllocGlobals();
+
+    return result;
+}
