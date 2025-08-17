@@ -6,8 +6,8 @@
 #include <bc/Memory.hpp>
 
 CDataAllocator::CDataAllocator(uint32_t bytesPerData, uint32_t dataPerBlock) {
-    this->m_bytesPerData = std::max(bytesPerData, 4u);
-    this->m_dataPerBlock = std::max(dataPerBlock, 1u);
+    this->m_bytesPerData = std::max(bytesPerData, uint32_t(sizeof(Data)));
+    this->m_dataPerBlock = std::max(dataPerBlock, uint32_t(1));
 }
 
 CDataAllocator::~CDataAllocator() {
@@ -58,7 +58,7 @@ CDataAllocator::Data* CDataAllocator::GetData(int32_t zero, const char* fileName
         }
 
         auto memory = static_cast<char*>(SMemAlloc(
-            this->m_dataPerBlock * this->m_bytesPerData + sizeof(Data),
+            this->m_dataPerBlock * this->m_bytesPerData + sizeof(Block),
             fileName,
             lineNumber,
             0));
