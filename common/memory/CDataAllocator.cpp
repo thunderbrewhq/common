@@ -11,9 +11,13 @@ CDataAllocator::CDataAllocator(uint32_t bytesPerData, uint32_t dataPerBlock) {
 }
 
 CDataAllocator::~CDataAllocator() {
+    if (this->m_blockList) {
+        Clear(__FILE__, __LINE__);
+    }
 }
 
 void CDataAllocator::Clear(const char* fileName, int32_t lineNumber) {
+#if defined(WHOA_BUILD_ASSERTIONS)
     if (this->m_dataUsed) {
         if (!fileName) {
             fileName == __FILE__;
@@ -21,7 +25,7 @@ void CDataAllocator::Clear(const char* fileName, int32_t lineNumber) {
         }
 
         SErrDisplayErrorFmt(
-            0x8510007E,
+            STORM_ERROR(0x7E),
             fileName,
             lineNumber,
             1,
@@ -34,6 +38,7 @@ void CDataAllocator::Clear(const char* fileName, int32_t lineNumber) {
             this->m_dataPerBlock,
             this->m_bytesPerData);
     }
+#endif
 
     while (this->m_blockList) {
         auto block = this->m_blockList;
@@ -63,7 +68,7 @@ CDataAllocator::Data* CDataAllocator::GetData(int32_t zero, const char* fileName
             lineNumber,
             0));
         Block* block = reinterpret_cast<Block*>(memory);
-        Data* data = reinterpret_cast<Data*>(memory + sizeof(Block*));
+        Data* data = reinterpret_cast<Data*>(memory + sizeof(Block));
 
         this->m_dataList = data;
         for (uint32_t i = 0; i < this->m_dataPerBlock - 1; ++i) {
@@ -71,7 +76,7 @@ CDataAllocator::Data* CDataAllocator::GetData(int32_t zero, const char* fileName
             data->m_next = reinterpret_cast<Data*>(next);
             data = data->m_next;
         }
-        data->m_next = 0;
+        data->m_next = nullptr;
         block->m_next = this->m_blockList;
         this->m_blockList = block;
     }
