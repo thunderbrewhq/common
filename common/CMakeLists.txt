@@ -2,6 +2,7 @@ file(GLOB COMMON_SOURCES
     "*.cpp"
     "datamgr/*.cpp"
     "datastore/*.cpp"
+    "memory/*.cpp"
     "mempool/*.cpp"
     "objectalloc/*.cpp"
     "processor/*.cpp"
