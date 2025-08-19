@@ -17,7 +17,6 @@ int32_t CObjectHeap::Allocate(uint32_t objSize, uint32_t heapObjects, const char
 
     void* indexStack = static_cast<char*>(this->m_obj) + heapObjects * objSize;
     this->m_indexStack = reinterpret_cast<uint32_t*>(indexStack);
-    this->m_bytes = heapObjects * objSize;
 
     for (int32_t i = 0; i < heapObjects; i++) {
         this->m_indexStack[i] = i;
@@ -88,11 +87,6 @@ void* CObjectHeap::Ptr(uint32_t index, uint32_t objSize, uint32_t heapObjects) {
             bytes[1],
             bytes[2],
             bytes[3]);
-    }
-
-    if (objSize * index >= this->m_bytes) {
-        SErrPrepareAppFatal(__FILE__, __LINE__);
-        SErrDisplayAppFatal("CObjectHeap::Ptr(): index(%u), objSize(%u), m_bytes(%u)", index, objSize, this->m_bytes);
     }
 
     return static_cast<char*>(this->m_obj) + objSize * index;

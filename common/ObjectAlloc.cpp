@@ -32,7 +32,7 @@ int32_t ObjectAlloc(uint32_t heapId, uint32_t* memHandle, void** objectPtr, bool
     return 0;
 }
 
-uint32_t ObjectAllocAddHeap(uint32_t objectSize, uint32_t objsPerBlock, const char* name, bool a4) {
+uint32_t ObjectAllocAddHeap(uint32_t objectSize, uint32_t objsPerBlock, const char* name, bool freeEmptyHeaps) {
     STORM_ASSERT(objectSize > 0);
 
     auto globals = GetObjAllocGlobals();
@@ -43,7 +43,7 @@ uint32_t ObjectAllocAddHeap(uint32_t objectSize, uint32_t objsPerBlock, const ch
     heap->m_objSize = objectSize;
     heap->m_objsPerBlock = objsPerBlock;
     SStrCopy(heap->m_heapName, name, sizeof(heap->m_heapName));
-    heap->char84 = a4;
+    heap->m_freeEmptyHeaps = freeEmptyHeaps;
 
     ReleaseObjAllocGlobals();
 
@@ -60,4 +60,11 @@ uint32_t ObjectAllocUsage(uint32_t heapId) {
     ReleaseObjAllocGlobals();
 
     return result;
+}
+
+void ObjectAllocDestroy() {
+    // NOTICE: It seems like sub_4D2F90 does nothing useful
+    auto globals = GetObjAllocGlobals();
+    globals->objects.Clear();
+    ReleaseObjAllocGlobals();
 }

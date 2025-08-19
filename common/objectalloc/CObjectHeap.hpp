@@ -9,7 +9,6 @@ class CObjectHeap {
     void* m_obj = nullptr;
     uint32_t* m_indexStack = nullptr;
     uint32_t m_allocated = 0;
-    uint32_t m_bytes = 0;
 
     // Member functions
     CObjectHeap() = default;
