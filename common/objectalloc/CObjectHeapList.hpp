@@ -22,6 +22,7 @@ class CObjectHeapList {
 
     // Member functions
     int32_t New(uint32_t* index, void** obj, bool zero);
+    void* Ptr(uint32_t index);
     void Delete(uint32_t index);
     void FreeEmptyHeaps();
     uint32_t BlocksAllocated();

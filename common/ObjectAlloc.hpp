@@ -9,6 +9,10 @@ uint32_t ObjectAllocAddHeap(uint32_t objectSize, uint32_t objsPerBlock, const ch
 
 uint32_t ObjectAllocUsage(uint32_t heapId);
 
+void* ObjectPtr(uint32_t heapId, uint32_t memHandle);
+
+void ObjectFree(uint32_t heapId, uint32_t memHandle);
+
 void ObjectAllocDestroy();
 
 #endif

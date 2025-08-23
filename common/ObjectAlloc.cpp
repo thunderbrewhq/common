@@ -62,6 +62,21 @@ uint32_t ObjectAllocUsage(uint32_t heapId) {
     return result;
 }
 
+void* ObjectPtr(uint32_t heapId, uint32_t memHandle) {
+    auto globals = GetObjAllocGlobals();
+    STORM_ASSERT(heapId < globals->objects.Count());
+    auto result = globals->objects[heapId].Ptr(memHandle);
+    ReleaseObjAllocGlobals();
+    return result;
+}
+
+void ObjectFree(uint32_t heapId, uint32_t memHandle) {
+    auto globals = GetObjAllocGlobals();
+    STORM_ASSERT(heapId < globals->objects.Count());
+    globals->objects[heapId].Delete(memHandle);
+    ReleaseObjAllocGlobals();
+}
+
 void ObjectAllocDestroy() {
     // NOTICE: It seems like sub_4D2F90 does nothing useful
     auto globals = GetObjAllocGlobals();

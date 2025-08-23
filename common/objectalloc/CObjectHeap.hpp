@@ -18,6 +18,7 @@ class CObjectHeap {
     int32_t New(uint32_t objSize, uint32_t heapObjects, uint32_t* index, const char* heapName, void** obj, bool zero);
     void* Ptr(uint32_t index, uint32_t objSize, uint32_t heapObjects);
     void Delete(uint32_t index, uint32_t objSize, uint32_t heapObjects);
+    void Free();
 };
 
 #endif

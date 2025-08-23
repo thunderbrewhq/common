@@ -50,10 +50,19 @@ int32_t CObjectHeapList::New(uint32_t* index, void** obj, bool zero) {
     return 1;
 }
 
+void* CObjectHeapList::Ptr(uint32_t index) {
+    uint32_t heapId = index / this->m_objsPerBlock;
+    uint32_t stackId = index % this->m_objsPerBlock;
+
+    STORM_ASSERT(heapId < this->m_heaps.Count());
+    return this->m_heaps[heapId].Ptr(stackId, this->m_objSize, this->m_objsPerBlock);
+}
+
 void CObjectHeapList::Delete(uint32_t index) {
     uint32_t heapId = index / this->m_objsPerBlock;
     uint32_t stackId = index % this->m_objsPerBlock;
 
+    STORM_ASSERT(heapId < this->m_heaps.Count());
     auto& heap = this->m_heaps[heapId];
     if (heap.m_allocated == this->m_objsPerBlock) {
         this->m_numFullHeaps--;
@@ -108,7 +117,13 @@ void CObjectHeapList::FreeEmptyHeaps() {
     uint32_t count = this->m_heaps.Count();
 
     while (count > 0 && totalAllocated < totalObjsPerBlock && !totalEmptyHeaps) {
-        // TODO: Remove last element from this->m_heaps
+        auto& heap = this->m_heaps[count - 1];
+        if (heap.m_obj && !heap.m_allocated) {
+            heap.Free();
+            totalObjsPerBlock -= this->m_objsPerBlock;
+            totalEmptyHeaps--;
+            this->uint20 = 0;
+        }
         count--;
     }
 

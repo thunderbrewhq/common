@@ -5,9 +5,7 @@
 #include <storm/Error.hpp>
 
 CObjectHeap::~CObjectHeap() {
-    if (this->m_obj) {
-        SMemFree(this->m_obj, __FILE__, __LINE__, 0);
-    }
+    this->Free();
 }
 
 int32_t CObjectHeap::Allocate(uint32_t objSize, uint32_t heapObjects, const char* heapName) {
@@ -126,4 +124,13 @@ void CObjectHeap::Delete(uint32_t index, uint32_t objSize, uint32_t heapObjects)
     STORM_ASSERT(this->m_allocated);
 
     this->m_indexStack[--this->m_allocated] = index;
+}
+
+void CObjectHeap::Free() {
+    if (this->m_obj) {
+        SMemFree(this->m_obj, __FILE__, __LINE__, 0);
+    }
+    this->m_obj = nullptr;
+    this->m_indexStack = nullptr;
+    this->m_allocated = 0;
 }
