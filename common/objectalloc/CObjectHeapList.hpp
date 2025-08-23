@@ -14,13 +14,16 @@ class CObjectHeapList {
     uint32_t m_hasEmptyHeaps = 0;
     uint32_t uint20 = 0;
     uint32_t m_fullestHeap = 0;
-    char m_heapName[80];
+    char m_heapName[80] = {};
     uint32_t uint78 = 0;
     uint32_t uint7C = 0;
     uint32_t uint80 = 0;
     uint8_t m_freeEmptyHeaps = 1;
 
     // Member functions
+    CObjectHeapList() = default;
+    CObjectHeapList(const CObjectHeapList& list);
+    CObjectHeapList& operator=(const CObjectHeapList& list) = delete;
     int32_t New(uint32_t* index, void** obj, bool zero);
     void* Ptr(uint32_t index);
     void Delete(uint32_t index);

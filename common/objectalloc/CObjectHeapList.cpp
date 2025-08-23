@@ -1,6 +1,26 @@
 #include "common/objectalloc/CObjectHeapList.hpp"
 #include <storm/Error.hpp>
 
+CObjectHeapList::CObjectHeapList(const CObjectHeapList& list) {
+    if (this == &list) {
+        return;
+    }
+
+    this->m_heaps.Set(list.m_heaps.Count(), list.m_heaps.Ptr());
+
+    this->m_objSize = list.m_objSize;
+    this->m_objsPerBlock = list.m_objsPerBlock;
+    this->m_numFullHeaps = list.m_numFullHeaps;
+    this->m_hasEmptyHeaps = list.m_hasEmptyHeaps;
+    this->uint20 = list.uint20;
+    this->m_fullestHeap = list.m_fullestHeap;
+    memcpy(this->m_heapName, list.m_heapName, sizeof(this->m_heapName));
+    this->uint78 = list.uint78;
+    this->uint7C = list.uint7C;
+    this->uint80 = list.uint80;
+    this->m_freeEmptyHeaps = list.m_freeEmptyHeaps;
+}
+
 int32_t CObjectHeapList::New(uint32_t* index, void** obj, bool zero) {
     STORM_ASSERT(index);
 
