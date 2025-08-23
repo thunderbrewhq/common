@@ -1,6 +1,7 @@
 #ifndef COMMON_MD5_HPP
 #define COMMON_MD5_HPP
 
+#include <cstddef>
 #include <cstdint>
 
 typedef struct {
