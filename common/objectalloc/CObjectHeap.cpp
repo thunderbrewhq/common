@@ -107,10 +107,10 @@ void CObjectHeap::Delete(uint32_t index, uint32_t objSize, uint32_t heapObjects)
     if (index >= heapObjects) {
         const char* format = "\"%s\", %s = %ld (0x%08X)";
         const uint8_t bytes[4] = {
-            (index >> 24) & 0xFF,
-            (index >> 16) & 0xFF,
-            (index >> 8) & 0xFF,
-            index & 0xFF
+            static_cast<uint8_t>((index >> 24) & 0xFF),
+            static_cast<uint8_t>((index >> 16) & 0xFF),
+            static_cast<uint8_t>((index >> 8) & 0xFF),
+            static_cast<uint8_t>(index & 0xFF)
         };
 
         if (isprint(bytes[0]) && isprint(bytes[1]) && isprint(bytes[2]) && isprint(bytes[3])) {
