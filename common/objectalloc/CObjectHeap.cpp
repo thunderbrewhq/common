@@ -4,6 +4,18 @@
 #include <bc/Memory.hpp>
 #include <storm/Error.hpp>
 
+CObjectHeap::CObjectHeap(const CObjectHeap& heap) {
+    if (this == &heap) {
+        return;
+    }
+    this->m_obj = heap.m_obj;
+    this->m_indexStack = heap.m_indexStack;
+    this->m_allocated = heap.m_allocated;
+    heap.m_obj = nullptr;
+    heap.m_indexStack = nullptr;
+    heap.m_allocated = 0;
+}
+
 CObjectHeap::~CObjectHeap() {
     this->Free();
 }

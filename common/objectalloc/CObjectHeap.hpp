@@ -6,12 +6,14 @@
 class CObjectHeap {
     public:
     // Member variables
-    void* m_obj = nullptr;
-    uint32_t* m_indexStack = nullptr;
-    uint32_t m_allocated = 0;
+    mutable void* m_obj = nullptr;
+    mutable uint32_t* m_indexStack = nullptr;
+    mutable uint32_t m_allocated = 0;
 
     // Member functions
     CObjectHeap() = default;
+    CObjectHeap(const CObjectHeap& heap);
+    CObjectHeap& operator=(const CObjectHeap& heap) = delete;
     ~CObjectHeap();
 
     int32_t Allocate(uint32_t objSize, uint32_t heapObjects, const char* heapName);
