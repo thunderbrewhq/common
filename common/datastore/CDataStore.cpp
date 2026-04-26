@@ -5,12 +5,36 @@
 #include <bc/Memory.hpp>
 #include <storm/String.hpp>
 
+CDataStore::CDataStore() {
+    this->m_data = nullptr;
+    this->m_base = 0;
+    this->m_alloc = 0;
+    this->m_size = 0;
+    this->m_read = -1;
+}
+
+CDataStore::CDataStore(uint8_t* data, uint32_t size) {
+    this->m_data = data;
+    this->m_base = 0;
+    this->m_alloc = -1;
+    this->m_size = size;
+    this->m_read = 0;
+}
+
+CDataStore::CDataStore(uint8_t* data, uint32_t size, uint32_t alloc) {
+    this->m_data = data;
+    this->m_base = 0;
+    this->m_alloc = alloc;
+    this->m_size = size;
+    this->m_read = -1;
+}
+
 CDataStore::~CDataStore() {
     this->Destroy();
 }
 
 void CDataStore::Destroy() {
-    if (this->m_alloc != -1) {
+    if (!this->IsReadOnly()) {
         this->InternalDestroy(this->m_data, this->m_base, this->m_alloc);
     }
 }
@@ -133,6 +157,44 @@ CDataStore& CDataStore::Get(float& val) {
     return *this;
 }
 
+CDataStore& CDataStore::GetArray(uint8_t* val, uint32_t count) {
+    STORM_ASSERT(val || !count); // TODO this is a validation macro
+    STORM_ASSERT(this->IsFinal());
+
+    if (this->IsValid()) {
+        auto remaining = count;
+
+        while (remaining > 0) {
+            uint32_t available = this->m_size - this->m_read;
+            uint32_t toRead = (available < remaining) ? available : remaining;
+
+            if (toRead >= this->m_alloc) {
+                toRead = this->m_alloc;
+            }
+
+            if (toRead <= 1) {
+                toRead = 1;
+            }
+
+            if (!this->FetchRead(this->m_read, toRead)) {
+                break;
+            }
+
+            auto src = this->m_data + (this->m_read - this->m_base);
+
+            if (val != src) {
+                memcpy(val, src, toRead);
+            }
+
+            remaining -= toRead;
+            val += toRead;
+            this->m_read += toRead;
+        }
+    }
+
+    return *this;
+}
+
 void CDataStore::GetBufferParams(const void** data, uint32_t* size, uint32_t* alloc) const {
     if (data) {
         *data = this->m_data;
@@ -188,6 +250,12 @@ CDataStore& CDataStore::GetString(char* val, uint32_t maxChars) {
     return *this;
 }
 
+void CDataStore::Initialize() {
+    if (!this->IsReadOnly()) {
+        this->InternalInitialize(this->m_data, this->m_base, this->m_alloc);
+    }
+}
+
 void CDataStore::InternalDestroy(uint8_t*& data, uint32_t& base, uint32_t& alloc) {
     if (alloc && data) {
         SMemFree(data, __FILE__, __LINE__, 0);
@@ -215,8 +283,16 @@ int32_t CDataStore::InternalFetchWrite(uint32_t pos, uint32_t bytes, uint8_t*& d
     return 1;
 }
 
-int32_t CDataStore::IsFinal() {
+int32_t CDataStore::IsFinal() const {
     return this->m_read != -1;
+}
+
+int32_t CDataStore::IsReadOnly() const {
+    return this->m_alloc == -1;
+}
+
+int32_t CDataStore::IsValid() const {
+    return this->m_read <= this->m_size;
 }
 
 int32_t CDataStore::IsRead() const {
@@ -334,13 +410,19 @@ CDataStore& CDataStore::PutString(const char* val) {
 }
 
 void CDataStore::Reset() {
-    if (this->m_alloc == -1) {
+    if (this->IsReadOnly()) {
         this->m_data = nullptr;
         this->m_alloc = 0;
     }
 
     this->m_size = 0;
     this->m_read = -1;
+}
+
+void CDataStore::Seek(uint32_t pos) {
+    STORM_ASSERT(this->IsFinal());
+
+    this->m_read = pos;
 }
 
 CDataStore& CDataStore::Set(uint32_t pos, uint16_t val) {
@@ -360,10 +442,10 @@ void CDataStore::SetSize(uint32_t size) {
     this->m_size = size;
 }
 
-uint32_t CDataStore::Size() {
+uint32_t CDataStore::Size() const {
     return this->m_size;
 }
 
-bool CDataStore::Sub8CBBF0(uint32_t a2) {
-    return this->m_read <= this->m_size && this->m_size - this->m_read >= a2;
+uint32_t CDataStore::Tell() const {
+    return this->m_read;
 }

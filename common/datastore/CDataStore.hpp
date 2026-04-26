@@ -5,13 +5,6 @@
 
 class CDataStore {
     public:
-    // Member variables
-    uint8_t* m_data = nullptr;
-    uint32_t m_base = 0;
-    uint32_t m_alloc = 0;
-    uint32_t m_size = 0;
-    uint32_t m_read = -1;
-
     // Virtual member functions
     virtual void InternalInitialize(uint8_t*& data, uint32_t& base, uint32_t& alloc) {};
     virtual void InternalDestroy(uint8_t*& data, uint32_t& base, uint32_t& alloc);
@@ -26,6 +19,9 @@ class CDataStore {
     virtual uint32_t GetHeaderSpace();
 
     // Member functions
+    CDataStore();
+    CDataStore(uint8_t* data, uint32_t size);
+    CDataStore(uint8_t* data, uint32_t size, uint32_t alloc);
     void Destroy();
     int32_t FetchRead(uint32_t pos, uint32_t bytes);
     int32_t FetchWrite(uint32_t pos, uint32_t bytes, const char* fileName, int32_t lineNumber);
@@ -34,9 +30,13 @@ class CDataStore {
     CDataStore& Get(uint32_t& val);
     CDataStore& Get(uint64_t& val);
     CDataStore& Get(float& val);
+    CDataStore& GetArray(uint8_t* val, uint32_t count);
     CDataStore& GetDataInSitu(void*& val, uint32_t bytes);
     CDataStore& GetString(char* val, uint32_t maxChars);
-    int32_t IsFinal();
+    void Initialize();
+    int32_t IsFinal() const;
+    int32_t IsReadOnly() const;
+    int32_t IsValid() const;
     CDataStore& Put(uint8_t val);
     CDataStore& Put(uint16_t val);
     CDataStore& Put(uint32_t val);
@@ -45,10 +45,19 @@ class CDataStore {
     CDataStore& PutArray(const uint8_t* val, uint32_t count);
     CDataStore& PutData(const void* val, uint32_t bytes);
     CDataStore& PutString(const char* val);
+    void Seek(uint32_t pos);
     CDataStore& Set(uint32_t pos, uint16_t val);
     void SetSize(uint32_t size);
-    uint32_t Size();
-    bool Sub8CBBF0(uint32_t a2);
+    uint32_t Size() const;
+    uint32_t Tell() const;
+
+    private:
+    // Member variables
+    uint8_t* m_data;
+    uint32_t m_base;
+    uint32_t m_alloc;
+    uint32_t m_size;
+    uint32_t m_read;
 };
 
 #endif

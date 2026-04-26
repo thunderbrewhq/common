@@ -20,12 +20,14 @@ class XMLNode {
     XMLNode* m_next;
 
     // Member functions
-    XMLNode();
+    XMLNode(XMLNode* parent, const char* name);
     ~XMLNode();
-    const char* GetAttributeByName(const char* name);
+    const char* GetAttributeByName(const char* name) const;
     const char* GetBody() const;
-    XMLNode* GetChildByName(const char* name);
-    const char* GetName();
+    const XMLNode* GetChild() const;
+    const XMLNode* GetChildByName(const char* name) const;
+    const char* GetName() const;
+    const XMLNode* GetSibling() const;
     void Init(XMLNode* parent, const char* name);
     void SetAttribute(const char* name, const char* value);
 };
