@@ -9,7 +9,7 @@
 
 typedef void* HANDLE;
 
-DECLARE_HANDLE(HOBJECT);
+DECLARE_STORM_HANDLE(HOBJECT);
 
 HOBJECT HandleCreate(CHandleObject* ptr);
 
